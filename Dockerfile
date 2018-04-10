@@ -12,5 +12,5 @@ RUN \
 COPY test_policy.json /etc/opt/chrome/policies/managed/test_policy.json
 USER user
 WORKDIR /home/user
-ENTRYPOINT ["chromium"]
+ENTRYPOINT ["chromium-browser"]
 CMD []
