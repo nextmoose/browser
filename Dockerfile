@@ -1,9 +1,9 @@
 FROM fedora:27
 RUN \
     dnf update --assumeyes && \
+        dnf install --assumeyes gnupg gnupg pass findutils && \
         adduser user
 USER user
-WORKDIR /home/user
-VOLUME /home
+COPY init.user.sh post.user.sh /opt/browser/
 ENTRYPOINT ["chromium-browser"]
 CMD []
