@@ -1,10 +1,9 @@
-FROM urgemerge/chromium-pulseaudio@sha256:21d8120ff7857afb0c18d4abf098549de169782e652437441c3c7778a755e46f
+FROM fedora:27
 RUN \
-    adduser --disabled-password --gecos "" user && \
-    apt-get clean all
+    dnf update --assumeyes && \
+        adduser user
 USER user
 WORKDIR /home/user
-RUN \
-    mkdir /home/user/data
-ENTRYPOINT ["chromium", "--user-data-dir=/home/user/data"]
+VOLUME /home
+ENTRYPOINT ["chromium-browser"]
 CMD []
