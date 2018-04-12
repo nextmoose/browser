@@ -1,10 +1,13 @@
-FROM urgemerge/chromium-pulseaudio@sha256:21d8120ff7857afb0c18d4abf098549de169782e652437441c3c7778a755e46f
+FROM fedora:27
 RUN \
-    adduser --disabled-password --gecos "" user && \
-    apt-get clean all
+    dnf update --assumeyes && \
+        dnf install --assumeyes gnupg gnupg pass findutils curl unzip && \
+        cd /usr/local/bin && \
+        curl --output browserpass-linux64.zip https://github.com/dannyvankooten/browserpass/releases/download/2.0.19/browserpass-linux64.zip && \
+        unzip browserpass-linux64.zip && \
+        bash install.sh && \
+        adduser user
 USER user
-WORKDIR /home/user
-RUN \
-    mkdir /home/user/data
-ENTRYPOINT ["chromium", "--user-data-dir=/home/user/data"]
+COPY init.user.sh post.user.sh /opt/browser/
+ENTRYPOINT ["chromium-browser"]
 CMD []
